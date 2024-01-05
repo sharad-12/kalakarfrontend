@@ -1,0 +1,185 @@
+import React from "react";
+// import { useState } from "react";
+import { Calendar } from "primereact/calendar";
+import "./Dashboard.css";
+import { Link } from "react-router-dom";
+export default function Dashboard() {
+  return (
+    <div className="Dashboard">
+      <div className="dashboarditems">
+        <div className="card flex justify-content-center">
+          <Calendar label="Basic date picker" />
+        </div>
+        <div className="card flex justify-content-center">
+          <Calendar label="Basic date picker" />
+        </div>
+        <button class="dashboardbutton">Filter</button>
+      </div>
+      <div className="dashboard_circle">
+        <div class="circle">
+        <Link to="/Dashboard" className="Link">
+            {" "}
+            <p>Total Patrons</p>
+            <p>12</p>
+          </Link>
+        </div>
+        <div class="circle">
+        <Link to="/DashboardArtist" className="Link">
+            {" "}
+            <p>Total Artists</p>
+            <p>12</p>
+          </Link>
+        </div>
+        <div class="circle">
+        <Link to="/Dashboardpartner" className="Link">
+            {" "}
+            <p>Total Partners</p>
+            <p>12</p>
+          </Link>
+        </div>
+        <div class="circle">
+        <Link to="/DashboardArtLover" className="Link">
+            {" "}
+            <p>Total Art-Lovers</p>
+            <p>12</p>
+          </Link>
+        </div>
+      </div>
+      <div className="dashboard_circle">
+        <div class="circle">
+          <Link to="/DashboardOpportunity" className="Link">
+            {" "}
+            <p>Opportunities</p>
+            <p>12</p>
+          </Link>
+        </div>
+        <div class="circle applicationprogress">
+          <div className="uppercircle">
+            <div className="progressbar1">M</div>
+            <Link to="/DashboardApplication" className="Link">
+            {" "}
+            <p>Applications</p>
+            <p>12</p>
+          </Link>
+            <div className="progressbar2">M</div>
+          </div>
+        </div>
+        <div class="circle">
+        <Link to="/DashboardPerformance" className="Link">
+            {" "}
+            <p>Performances</p>
+            <p>12</p>
+          </Link>
+        </div>
+        <div class="circle" style={{ border: "3px solid #AD2F3B" }}>
+        <Link to="/DashboardRevenue" className="Link">
+            {" "}
+            <p>Revenue</p>
+            <p>12</p>
+          </Link>
+        </div>
+      </div>
+      <div className="dashboarditems">
+        <div className="card flex justify-content-center">
+          <input type="text" className="p-invalid" />
+        </div>
+        <button class="dashboardbutton">Submit</button>
+      </div>
+      <div className="dashboard_graph">
+        <h3>Revenues</h3>
+        <img src="./revenue.png" alt="" />
+      </div>
+    </div>
+  );
+}
+
+
+// import React, { useContext } from "react";
+// import { DataContext } from "../../DataContext";
+// import { Calendar } from "primereact/calendar";
+// import { Link } from "react-router-dom";
+
+// export default function Dashboard() {
+//   const { userData, opportunityData, patronData } = useContext(DataContext);
+
+//   return (
+//     <div className="Dashboard">
+//       <div className="dashboarditems">
+//         <div className="card flex justify-content-center">
+//           <Calendar label="Basic date picker" />
+//         </div>
+//         <div className="card flex justify-content-center">
+//           <Calendar label="Basic date picker" />
+//         </div>
+//         <button className="dashboardbutton">Filter</button>
+//       </div>
+//       <div className="dashboard_circle">
+//         <div className="circle">
+//           <Link to="/Dashboard" className="Link">
+//             <p>Total Patrons</p>
+//             <p>{patronData.length}</p>
+//           </Link>
+//         </div>
+//         <div className="circle">
+//           <Link to="/DashboardArtist" className="Link">
+//             <p>Total Artists</p>
+//             <p>{userData.length}</p>
+//           </Link>
+//         </div>
+//         <div className="circle">
+//           <Link to="/Dashboardpartner" className="Link">
+//             <p>Total Partners</p>
+//             <p></p>
+//           </Link>
+//         </div>
+//         <div className="circle">
+//           <Link to="/DashboardArtLover" className="Link">
+//             <p>Total Art-Lovers</p>
+//             <p></p>
+//           </Link>
+//         </div>
+//       </div>
+//       <div className="dashboard_circle">
+//         <div className="circle">
+//           <Link to="/DashboardOpportunity" className="Link">
+//             <p>Opportunities</p>
+//             <p>{opportunityData.length}</p>
+//           </Link>
+//         </div>
+//         <div className="circle applicationprogress">
+//           <div className="uppercircle">
+//             <div className="progressbar1">M</div>
+//             <Link to="/DashboardApplication" className="Link">
+//               <p>Applications</p>
+//               <p></p>
+//             </Link>
+//             <div className="progressbar2">M</div>
+//           </div>
+//         </div>
+//         <div className="circle">
+//           <Link to="/DashboardPerformance" className="Link">
+//             <p>Performances</p>
+//             <p></p>
+//           </Link>
+//         </div>
+//         <div className="circle" style={{ border: "3px solid #AD2F3B" }}>
+//           <Link to="/DashboardRevenue" className="Link">
+//             <p>Revenue</p>
+//             <p></p>
+//           </Link>
+//         </div>
+//       </div>
+//       <div className="dashboarditems">
+//         <div className="card flex justify-content-center">
+//           <input type="text" className="p-invalid" />
+//         </div>
+//         <button className="dashboardbutton">Submit</button>
+//       </div>
+//       <div className="dashboard_graph">
+//         <h3>Revenues</h3>
+//         <img src="./revenue.png" alt="" />
+//       </div>
+//     </div>
+//   );
+// }
+
