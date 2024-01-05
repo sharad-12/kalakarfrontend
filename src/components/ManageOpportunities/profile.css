@@ -81,9 +81,8 @@
   color: #000000;
   font-size: 22px;
 }
-.left-division {
+.opportunity_left-division {
   text-align: left;
-  width: 30%;
   padding: 20px;
   border-right: 1px solid black;
   font-family: Poppins;
@@ -105,8 +104,8 @@
   color: #818181;
 }
 
-.right-division {
- width: 70%;
+.opportunity_right-division {
+ 
   padding: 20px;
   font-family: Poppins;
   font-size: 18px;

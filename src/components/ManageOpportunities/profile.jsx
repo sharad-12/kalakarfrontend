@@ -33,7 +33,7 @@ const OpportunityProfile= () => {
         </div>
       </div>
       <div class="profile-card">
-        <div class="left-division">
+        <div class="opportunity_left-division">
           <div class="section-heading">PURPOSE OF PERFORMANCE</div>
           <div class="paragraph-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non
@@ -62,7 +62,7 @@ const OpportunityProfile= () => {
           <div class="section-heading">Curated Performance</div>
         </div>
 
-        <div class="right-division">
+        <div class="opportunity_right-division">
           <div class="section-heading">Description of the Performance</div>
           <div class="paragraph-text">
             kerala’s traditional dance performance to get awareness about the

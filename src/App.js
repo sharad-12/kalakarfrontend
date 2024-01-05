@@ -65,6 +65,7 @@ function App() {
           <Route path="/Manageskills" element={<Skills />} />
         </Routes>
       </BrowserRouter>
+   
       {/* <Artistprofile/> */}
       <Footer />
     </div>
