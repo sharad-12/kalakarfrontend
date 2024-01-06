@@ -9,7 +9,7 @@ import UserPartner from "./components/ManageUser/UserPartner";
 import Opportunity from "./components/ManageOpportunities/Opportunity";
 //  import Application from './components/Applications/application'
 //  import Jobs from './components/ManageJobs/Managejobs'
-//  import Profile from './components/ManageOpportunities/profile'
+ import Profile from './components/ManageOpportunities/profile'
 import Dashboard from "./components/Dashboard/Dashboard";
 
 import Skills from "./components/Skills/Manageskills";
@@ -23,6 +23,8 @@ import Dashboardpartner from "./components/Dashboard/Dashboardpartner";
 import DashboardPerformance from "./components/Dashboard/Dashboardperformance";
 //  import ManageProfile from './components/ManageProfiles/profile'
 import ArtsistManagement from "./components/ArtistManagement/artistmanagement";
+import UploadOpportunities from "./components/ManageOpportunities/OpportunitesforArtist/UploadOpportunities";
+
 function App() {
   return (
     <div className="App">
@@ -40,7 +42,6 @@ function App() {
             path="/DashboardOpportunity"
             element={<DashboardOpportunity />}
           />
-
           <Route
             path="/DashboardPerformance"
             element={<DashboardPerformance />}
@@ -54,12 +55,12 @@ function App() {
           <Route path="/UserPatron" element={<UserPatron />} />
           <Route path="/ArtsistManagement" element={<ArtsistManagement />} />
           <Route path="/Opportunity" element={<Opportunity />} />
-          <Route path="/Opportunity" element={<Opportunity />} />
+          <Route path="/UploadOpportunities" element={<UploadOpportunities/>}/>
           <Route path="/artist" element={<UserArtist />} />
           <Route path="/Patron" element={<UserPatron />} />
           <Route path="/Partner" element={<UserPartner />} />
           <Route path="/artLover" element={<UserArtLover />} />
-          <Route path="/Opportunity" element={<Opportunity />} />
+          <Route path="/OppProfile" element={<Profile />} />
           <Route path="/ManageLanguages" element={<Language />} />
           <Route path="/Manageskills" element={<Skills />} />
         </Routes>

@@ -1,87 +1,154 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineLocationOn, MdOutlineMailOutline } from "react-icons/md";
 import "./profile.css";
+import axios from "axios";
 const OpportunityProfile= () => {
+
+  const [oppData, setOppData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const id  = localStorage.getItem("oppid");
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ0NjAyNTQsImV4cCI6MTcwNDU0NjY1NH0.3bC-O4JIaVqgKmsQzpZadK0I5qBpSFSlW1vmNxb5wnM"
+  const getopp = async() =>{
+
+    try {
+
+      setLoading(true);
+      const response = await axios.get(`http://localhost:4000/api/v1/admin/opps/${id}`, 
+      {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        
+      });
+      console.log(response.data.data);
+      setOppData(response.data.data);
+      setLoading(false);
+    } catch (error) {
+       console.log(error);
+      setLoading(false);
+    }
+  }
+  useEffect(()=>{
+    getopp();
+  }, [])
+
+  const formattedDate = oppData.performanceDate ? new Date(oppData.performanceDate).toLocaleString() : '';
+
+  if(loading){
+    return <div>
+      Loading.......
+    </div>
+  }
   
   return (
     <div className="opportunity-profile">
       <div className="top-division">
-        <h1>Kalai Traditional Showcase</h1>
-        <h2>Dance Performance</h2>
+        <h1>
+          { oppData.artName }
+        </h1>
+        <h2>
+          {oppData.artType}
+        </h2>
       </div>
       <div className="profile-middle">
         <div className="icon-text">
           <div className="icons">
           <FiPhone className="profileicons" />
           </div>
-          <p>1234567890</p>
+          <p>
+            {oppData.contactPersonNumber}
+          </p>
         </div>
         <div className="icon-text">
         <div className="icons">
           <MdOutlineLocationOn className="profileicons" />
           </div>
-          <p>Cochin</p>
+          <p>
+            {oppData.location}
+          </p>
         </div>
         <div className="icon-text">
         <div className="icons">
           <MdOutlineMailOutline className="profileicons" />
           </div>
-          <p>kava02@gmail.com</p>
+          <p>
+            {oppData.contactEmail}
+          </p>
         </div>
       </div>
       <div class="profile-card">
         <div class="opportunity_left-division">
           <div class="section-heading">PURPOSE OF PERFORMANCE</div>
           <div class="paragraph-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non
-            ante eu ex tristique venenatis vitae ac arcu.
+            {oppData.purpose}
           </div>
           <div class="section-heading">Languages</div>
          
          
           <ul class="list-items">
-            <li class="list-item">Tamil</li>
-            <li class="list-item">Malayalam</li>
+            <li class="list-item">
+              {oppData.languages}
+            </li>
           </ul>
           <div class="paragraph-text"></div>
           <div class="section-heading">Venue of Performance</div>
           <div class="paragraph-text">
-            No 12, Gst Apartment, Gst road, Vanpatti, Cochin, Kerala.
+            {oppData.venue}
           </div>
           <div class="section-heading">Budget</div>
-          <div class="paragraph-text">200000</div>
+          <div class="paragraph-text">
+            {oppData.budget}
+          </div>
           <div class="section-heading">Date of Performance</div>
-          <div class="paragraph-text">12/11/2023</div>
+          <div class="paragraph-text">
+            {formattedDate}
+          </div>
           <div class="section-heading">Duration of performance</div>
-          <div class="paragraph-text">2 Hours (6.30 to 8.30)</div>
+          <div class="paragraph-text">
+           {oppData.performanceDuration}
+          </div>
           <div class="section-heading">Live / Recorded/ Part Live</div>
-          <div class="paragraph-text">Recorded</div>
+          <div class="paragraph-text">
+            {oppData.mediaType}
+          </div>
           <div class="section-heading">Curated Performance</div>
         </div>
 
         <div class="opportunity_right-division">
           <div class="section-heading">Description of the Performance</div>
           <div class="paragraph-text">
-            kerala’s traditional dance performance to get awareness about the
-            climate change in both tamil and malayalam languages at cochin,
-            Kerala
+            {oppData.description}
           </div>
 
           <div class="section-heading">Category of Art</div>
-          <div class="paragraph-text">Dancer(Kathakali)</div>
+          <div class="paragraph-text">
+            {oppData.artCategory}
+          </div>
           <div class="section-heading">No. of Required Artists</div>
-          <div class="paragraph-text">25</div>
+          <div class="paragraph-text">
+            {oppData.requiredArtists}
+          </div>
           <div class="section-heading">Size of Audience</div>
-          <div class="paragraph-text">250</div>
+          <div class="paragraph-text">
+            {oppData.audienceSize}
+          </div>
           <div class="section-heading">Name of Contact Person</div>
-          <div class="paragraph-text">KAVA Mubin</div>
+          <div class="paragraph-text">
+            {oppData.contactPersonName}
+          </div>
           <div class="section-heading">Theme of Performance</div>
-          <div class="paragraph-text">kerala traditional performance</div>
+          <div class="paragraph-text">
+            {oppData.theme}
+          </div>
           <div class="section-heading">Any Other Requirements</div>
-          <div class="paragraph-text">Artists should be malayali</div>
+          <div class="paragraph-text">
+            {oppData.otherRequirements}
+          </div>
           <div class="section-heading">City & Country</div>
           <div class="paragraph-text">cochin, Kerala & India</div>
         </div>
@@ -100,4 +167,4 @@ const OpportunityProfile= () => {
   );
 };
 
-export default OpportunityProfile;
+export default OpportunityProfile

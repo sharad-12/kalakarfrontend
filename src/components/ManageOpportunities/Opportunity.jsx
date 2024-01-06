@@ -156,10 +156,12 @@
 // export default ManageOpportunity;
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../ManageUser/User.css";
 import ReactPaginate from "react-paginate";
 import { FaPlus } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const ManageOpportunity = () => {
   const [data, setData] = useState([]);
@@ -171,6 +173,7 @@ const ManageOpportunity = () => {
   const itemsPerPage = 10;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
+  const navigateto = useNavigate();
 
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
@@ -232,6 +235,11 @@ const ManageOpportunity = () => {
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const Clicked = (id) =>{
+    navigateto("/OppProfile")
+    localStorage.setItem("oppid", id);
+  }
   
   return (
     <div className="container">
@@ -248,7 +256,9 @@ const ManageOpportunity = () => {
             />
           </div>
         </div>
-        <FaPlus className="plus" />
+        <Link to="/UploadOpportunities">
+         <FaPlus className="plus" />
+        </Link>
       </div>
       <div className="filter-dropdown">
         Filter
@@ -282,7 +292,7 @@ const ManageOpportunity = () => {
             data.map((item, index) => (
               <tr key={index}>
                 <td>{item.id}</td>
-                <td className="viewicon">
+                <td onClick={ () => Clicked(item.id) } className="viewicon">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
