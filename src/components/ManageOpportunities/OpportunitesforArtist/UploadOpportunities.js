@@ -3,17 +3,20 @@ import "./UploadOpportunities.css";
 // import Patron_Navbar from "../Patron_Navbar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // import { makeAuthenticatedPOSTRequest } from "../../../services/serverHelper";
 // import { patronProfilePoints } from "../../../services/apis";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function UploadOpportunities() {
-  const { accessToken } = useSelector((state) => state.auth);
+  // const { accessToken } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({});
   const [uploadTab, setUploadTab] = useState(1);
   const navigate = useNavigate();
+
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ1Mjg0NjAsImV4cCI6MTcwNDYxNDg2MH0.fBw23o6qHS8pDLWq7TmSNVznPoMe3GsSn6OD5N8Zm9s"
 
   const inputChangeHandler = (e) => {
     setFormData((prevState) => {
@@ -51,45 +54,52 @@ function UploadOpportunities() {
 
     console.log(formData);
     const toastId = toast.loading("Loading...");
+    
+    toast.success("hello world")
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/api/v1/admin/postopps`,
+        JSON.stringify(formData), 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+       console.log(response.status);
+      if (response.status === 201) {
 
-  //   try {
-  //     const response = await makeAuthenticatedPOSTRequest(
-  //       patronProfilePoints.UPLOAD_OPPOR_API,
-  //       formData,
-  //       accessToken
-  //     );
+        toast.success("Successfully uploaded");
 
-  //     if (response.statusCode === 201) {
-  //       toast.success("Successfully uploaded");
+        // Clear date inputs
+        setFormData((prevState) => ({
+          ...prevState,
+          applicationPeriod: {
+            start: "",
+            end: "",
+          },
+        }));
 
-  //       // Clear date inputs
-  //       setFormData((prevState) => ({
-  //         ...prevState,
-  //         applicationPeriod: {
-  //           start: "",
-  //           end: "",
-  //         },
-  //       }));
+        // Clear other inputs (you may want to clear other fields as well)
+        setFormData((prevState) => ({
+          ...prevState,
+          artNature: "",
+          location: "",
+          description: "",
+          // Clear other fields here
+        }));
 
-  //       // Clear other inputs (you may want to clear other fields as well)
-  //       setFormData((prevState) => ({
-  //         ...prevState,
-  //         artNature: "",
-  //         location: "",
-  //         description: "",
-  //         // Clear other fields here
-  //       }));
-
-  //       navigate("/UploadedOpportunities");
-  //     } else {
-  //       console.log(response.message);
-  //       toast.error("Please provide all the required fields");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("something went wrong , please try again");
-  //   }
-    toast.dismiss(toastId);
+        // navigate("/UploadedOpps");
+      } else {
+        console.log(response);
+        toast.error("Please provide all the required fields");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong , please try again");
+    }
+     toast.dismiss(toastId);
   };
 
   let allLanguages = [
@@ -262,9 +272,8 @@ function UploadOpportunities() {
   ];
   return (
     <>
-      {/* <Patron_Navbar /> */}
       <div className="ArtistOpportunities_Page">
-        <div className="ArtistOpportunities_Image">
+        <div className="ArtistOpportunities_Image" style={{marginTop: "3%"}}>
           <div
             style={{ textAlign: "center" }}
             className="ArtistOpportunities_Image_Content"
@@ -281,7 +290,10 @@ function UploadOpportunities() {
           </p>
           <p
             className={uploadTab == 2 ? "active" : ""}
-            onClick={() => setUploadTab(2)}
+            onClick={() => {
+              setUploadTab(2)
+              navigate("/uploadedOpps")
+            }}
           >
             Uploaded Opportunities
           </p>
@@ -686,7 +698,7 @@ function UploadOpportunities() {
               </div>
             </div>
             <div className="ArtistOpportunities_Page_Infoform_btns">
-              <button type="Submit">Upload Opportunity</button>
+              <button type="Submit" style={{cursor: "pointer"}}>Upload Opportunity</button>
               {/* <Link
                 style={{ textDecoration: "none" }}
                 to={"/UploadedOpportunities"}

@@ -102,6 +102,7 @@
 import React, { useState, useEffect } from "react";
 import { BiSolidHide } from "react-icons/bi";
 import "./artistmanage.css";
+import { Link } from "react-router-dom";
 
 const ArtsistManagement = () => {
   const [selectedOption, setSelectedOption] = useState('default');
@@ -114,7 +115,7 @@ const ArtsistManagement = () => {
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ1Mjg0NjAsImV4cCI6MTcwNDYxNDg2MH0.fBw23o6qHS8pDLWq7TmSNVznPoMe3GsSn6OD5N8Zm9s"
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -123,7 +124,7 @@ const ArtsistManagement = () => {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQzODE3NDMsImV4cCI6MTcwNDQ2ODE0M30.j5PpZQA-m4PC-6JYgYWVOGeVoBImNOOCR1vsrdp44Vw`, // replace with your access token
+              Authorization: `Bearer ${token}`, // replace with your access token
               "Content-Type": "application/json",
             },
           }
@@ -194,10 +195,16 @@ const ArtsistManagement = () => {
           <div key={rowIndex} className="artist_row">
             {sortedProfiles.slice(startIndex + rowIndex * itemsPerRow, Math.min(endIndex, startIndex + (rowIndex + 1) * itemsPerRow)).map((profile) => (
               <div key={profile._id} className="artist_management_profile">
-                <img src={profile.avatar?.url} alt="" />
-                <h1>{profile.firstName}</h1>
-                <h2>{profile.role}</h2>
+                <Link to="/artistProfile">
+                 <img src={profile.avatar?.url} alt="" onClick={() =>{
+                  console.log(profile._id)
+                   localStorage.setItem("artId", profile._id)
+                   }} />
+                </Link>
+                <span>{profile.firstName}</span>
+                <span>{profile.role}</span>
               </div>
+              
             ))}
           </div>
         ))}

@@ -83,7 +83,7 @@
 }
 .left-division {
   text-align: left;
-  width: 30%;
+  width: 50%;
   padding: 20px;
   border-right: 1px solid black;
   font-family: Poppins;
@@ -97,16 +97,16 @@
 .paragraph-text {
   font-family: Poppins;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 27px;
   letter-spacing: 0em;
   text-align: left;
   margin-left: 10px;
-  color: #818181;
+  color: #000000;
 }
 
 .right-division {
- width: 70%;
+ width: 56%;
   padding: 20px;
   font-family: Poppins;
   font-size: 18px;

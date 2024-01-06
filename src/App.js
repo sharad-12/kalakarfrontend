@@ -9,7 +9,7 @@ import UserPartner from "./components/ManageUser/UserPartner";
 import Opportunity from "./components/ManageOpportunities/Opportunity";
 //  import Application from './components/Applications/application'
 //  import Jobs from './components/ManageJobs/Managejobs'
- import Profile from './components/ManageOpportunities/profile'
+import Profile from './components/ManageOpportunities/profile'
 import Dashboard from "./components/Dashboard/Dashboard";
 
 import Skills from "./components/Skills/Manageskills";
@@ -22,9 +22,10 @@ import DashboardOpportunity from "./components/Dashboard/Dashboardopportunity";
 import Dashboardpartner from "./components/Dashboard/Dashboardpartner";
 import DashboardPerformance from "./components/Dashboard/Dashboardperformance";
 //  import ManageProfile from './components/ManageProfiles/profile'
-//  import Artistprofile from './components/ArtistManagement/artistprofile'
+import Artistprofile from './components/ArtistManagement/artistprofile'
 import ArtsistManagement from "./components/ArtistManagement/artistmanagement";
 import UploadOpportunities from "./components/ManageOpportunities/OpportunitesforArtist/UploadOpportunities";
+import UploadedOpportunities from "./components/ManageOpportunities/OpportunitesforArtist/UploadedOpportunities";
 
 function App() {
   return (
@@ -57,7 +58,9 @@ function App() {
           <Route path="/ArtsistManagement" element={<ArtsistManagement />} />
           <Route path="/Opportunity" element={<Opportunity />} />
           <Route path="/UploadOpportunities" element={<UploadOpportunities/>}/>
+          <Route path="/UploadedOpps" element={<UploadedOpportunities/>}/>
           <Route path="/artist" element={<UserArtist />} />
+          <Route path="/artistProfile" element={<Artistprofile />} />
           <Route path="/Patron" element={<UserPatron />} />
           <Route path="/Partner" element={<UserPartner />} />
           <Route path="/artLover" element={<UserArtLover />} />

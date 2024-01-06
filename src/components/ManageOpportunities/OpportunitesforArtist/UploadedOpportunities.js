@@ -1,30 +1,23 @@
 import React from "react";
-import Patron_Navbar from "../Patron_Navbar";
 import "./UploadedOpportunities.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { makeAuthenticatedGETRequest } from "../../../services/serverHelper";
-import { patronProfilePoints } from "../../../services/apis";
-import { useSelector } from "react-redux";
+import axios from "axios";
 
 function UploadedOpportunities() {
   const [Opportunities, setOpportunities] = useState([]);
 
-  const { accessToken } = useSelector((state) => state.auth);
-
   const [loading, setLoading] = useState(false);
 
+  const [uploadTab, setUploadTab] = useState(2);
   const navigate = useNavigate();
 
   const fetchMoreData = async () => {
     setLoading(true);
     try {
-      const response = await makeAuthenticatedGETRequest(
-        patronProfilePoints.UPLOAD_OPPOR_API,
-        accessToken
-      );
+      const response = await axios.get();
       console.log(response);
 
       if (response.status === "success") {
@@ -57,12 +50,31 @@ function UploadedOpportunities() {
 
   return (
     <>
-      <Patron_Navbar />
       <div className="UploadedOpportunities_Page">
-        <div className="UploadedOpportunities_Image">
+        <div className="UploadedOpportunities_Image" style={{marginTop: "3%"}}>
           <div className="UploadedOpportunities_Image_Content">
             <p>Uploaded Opportunities</p>
           </div>
+        </div>
+
+        <div className="oppurtunity_tab p-2 mt-3 d-flex">
+          <p
+            className={uploadTab == 1 ? "active" : ""}
+            onClick={() => {
+              setUploadTab(1)
+              navigate("/uploadOpportunities")
+            }}
+          >
+            Upload Opportunities
+          </p>
+          <p
+            className={uploadTab == 2 ? "active" : ""}
+            onClick={() => {
+              setUploadTab(2)
+            }}
+          >
+            Uploaded Opportunities
+          </p>
         </div>
 
         {loading ? (

@@ -162,6 +162,7 @@ import ReactPaginate from "react-paginate";
 import { FaPlus } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ManageOpportunity = () => {
   const [data, setData] = useState([]);
@@ -174,10 +175,12 @@ const ManageOpportunity = () => {
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
   const navigateto = useNavigate();
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ1Mjg0NjAsImV4cCI6MTcwNDYxNDg2MH0.fBw23o6qHS8pDLWq7TmSNVznPoMe3GsSn6OD5N8Zm9s"
 
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
+
   useEffect(() => {
     const getOpportunity = async () => {
       try {
@@ -186,7 +189,7 @@ const ManageOpportunity = () => {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQzODE3NDMsImV4cCI6MTcwNDQ2ODE0M30.j5PpZQA-m4PC-6JYgYWVOGeVoBImNOOCR1vsrdp44Vw`,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }
@@ -202,6 +205,24 @@ const ManageOpportunity = () => {
     getOpportunity();
   }, []);
 
+  const deleteOpportunity = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/api/v1/admin/deleteopps?id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error fetching opportunity data:", error);
+    }
+  };
+  
   const handleSearch = () => {
     const filteredData = data.filter(
       (item) =>
@@ -292,7 +313,7 @@ const ManageOpportunity = () => {
             data.map((item, index) => (
               <tr key={index}>
                 <td>{item.id}</td>
-                <td onClick={ () => Clicked(item.id) } className="viewicon">
+                <td className="viewicon">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -321,6 +342,7 @@ const ManageOpportunity = () => {
                     height="13"
                     viewBox="0 0 19 10"
                     fill="none"
+                    onClick={ () => Clicked(item.id) }
                   >
                     <path
                       d="M9.5 0C4.18985 0 0 4.99968 0 4.99968C0 4.99968 4.18985 10 9.5 10C13.5604 10 19 4.99968 19 4.99968C19 4.99968 13.5604 0 9.5 0ZM9.5 8.11459C7.63519 8.11459 6.1173 6.71722 6.1173 4.99968C6.1173 3.28213 7.63519 1.88411 9.5 1.88411C11.3648 1.88411 12.8827 3.28213 12.8827 4.99968C12.8827 6.71722 11.3648 8.11459 9.5 8.11459ZM9.5 3.18102C9.2376 3.17646 8.97685 3.22012 8.73299 3.30945C8.48912 3.39878 8.26704 3.53199 8.07972 3.70129C7.8924 3.87059 7.7436 4.07258 7.64203 4.29546C7.54045 4.51834 7.48813 4.75763 7.48813 4.99935C7.48813 5.24107 7.54045 5.48036 7.64203 5.70324C7.7436 5.92612 7.8924 6.12812 8.07972 6.29741C8.26704 6.46671 8.48912 6.59992 8.73299 6.68925C8.97685 6.77858 9.2376 6.82224 9.5 6.81768C10.0171 6.80869 10.5098 6.61316 10.8721 6.27314C11.2344 5.93311 11.4373 5.47574 11.4373 4.99935C11.4373 4.52296 11.2344 4.06559 10.8721 3.72557C10.5098 3.38554 10.0171 3.19002 9.5 3.18102Z"
@@ -333,6 +355,7 @@ const ManageOpportunity = () => {
                     height="16"
                     viewBox="0 0 9 10"
                     fill="none"
+                    onClick={ () => deleteOpportunity(item.id) }
                   >
                     <path
                       d="M3.55263 1.625V1.75H5.44737V1.625C5.44737 1.35978 5.34756 1.10543 5.16989 0.917893C4.99222 0.730357 4.75126 0.625 4.5 0.625C4.24874 0.625 4.00778 0.730357 3.83011 0.917893C3.65244 1.10543 3.55263 1.35978 3.55263 1.625ZM2.96053 1.75V1.625C2.96053 1.19402 3.12272 0.780698 3.41143 0.475951C3.70014 0.171205 4.09171 0 4.5 0C4.90829 0 5.29986 0.171205 5.58857 0.475951C5.87728 0.780698 6.03947 1.19402 6.03947 1.625V1.75H8.70395C8.78247 1.75 8.85777 1.78292 8.91329 1.84153C8.96881 1.90013 9 1.97962 9 2.0625C9 2.14538 8.96881 2.22487 8.91329 2.28347C8.85777 2.34208 8.78247 2.375 8.70395 2.375H8.01308L7.53939 8.339C7.50341 8.7919 7.30753 9.21401 6.99059 9.52165C6.67365 9.8293 6.25878 10 5.82821 10H3.17179C2.74126 9.99996 2.32645 9.8292 2.00956 9.52157C1.69267 9.21393 1.49683 8.79186 1.46084 8.339L0.987158 2.375H0.296053C0.217535 2.375 0.142232 2.34208 0.0867118 2.28347C0.0311912 2.22487 0 2.14538 0 2.0625C0 1.97962 0.0311912 1.90013 0.0867118 1.84153C0.142232 1.78292 0.217535 1.75 0.296053 1.75H2.96053ZM2.05082 8.28675C2.07439 8.58346 2.2027 8.85999 2.41032 9.06154C2.61794 9.2631 2.88971 9.37498 3.17179 9.375H5.82821C6.11033 9.37504 6.38216 9.26319 6.58983 9.06163C6.7975 8.86006 6.92584 8.5835 6.94942 8.28675L7.41884 2.375H1.58116L2.05082 8.28675ZM3.90789 4.0625C3.90789 4.02146 3.90024 3.98083 3.88536 3.94291C3.87048 3.905 3.84867 3.87055 3.82118 3.84153C3.79369 3.81251 3.76106 3.78949 3.72514 3.77379C3.68922 3.75808 3.65072 3.75 3.61184 3.75C3.57296 3.75 3.53447 3.75808 3.49855 3.77379C3.46263 3.78949 3.42999 3.81251 3.4025 3.84153C3.37501 3.87055 3.3532 3.905 3.33833 3.94291C3.32345 3.98083 3.31579 4.02146 3.31579 4.0625V7.6875C3.31579 7.72854 3.32345 7.76917 3.33833 7.80709C3.3532 7.845 3.37501 7.87945 3.4025 7.90847C3.42999 7.93749 3.46263 7.96051 3.49855 7.97621C3.53447 7.99192 3.57296 8 3.61184 8C3.65072 8 3.68922 7.99192 3.72514 7.97621C3.76106 7.96051 3.79369 7.93749 3.82118 7.90847C3.84867 7.87945 3.87048 7.845 3.88536 7.80709C3.90024 7.76917 3.90789 7.72854 3.90789 7.6875V4.0625ZM5.38816 3.75C5.55158 3.75 5.68421 3.89 5.68421 4.0625V7.6875C5.68421 7.77038 5.65302 7.84987 5.5975 7.90847C5.54198 7.96708 5.46668 8 5.38816 8C5.30964 8 5.23434 7.96708 5.17882 7.90847C5.1233 7.84987 5.09211 7.77038 5.09211 7.6875V4.0625C5.09211 3.89 5.22474 3.75 5.38816 3.75Z"

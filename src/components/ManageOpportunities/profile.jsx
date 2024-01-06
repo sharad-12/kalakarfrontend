@@ -5,17 +5,19 @@ import { FiPhone } from "react-icons/fi";
 import { MdOutlineLocationOn, MdOutlineMailOutline } from "react-icons/md";
 import "./profile.css";
 import axios from "axios";
+
 const OpportunityProfile= () => {
 
   const [oppData, setOppData] = useState({});
+  const [patData, setPatData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const id  = localStorage.getItem("oppid");
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ0NjAyNTQsImV4cCI6MTcwNDU0NjY1NH0.3bC-O4JIaVqgKmsQzpZadK0I5qBpSFSlW1vmNxb5wnM"
+
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQ1Mjg0NjAsImV4cCI6MTcwNDYxNDg2MH0.fBw23o6qHS8pDLWq7TmSNVznPoMe3GsSn6OD5N8Zm9s"
   const getopp = async() =>{
 
     try {
-
       setLoading(true);
       const response = await axios.get(`http://localhost:4000/api/v1/admin/opps/${id}`, 
       {
@@ -27,6 +29,16 @@ const OpportunityProfile= () => {
       });
       console.log(response.data.data);
       setOppData(response.data.data);
+
+      const userdata = await axios.get(`http://localhost:4000/api/v1/admin/user/${oppData.userId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      
+    });
+    console.log(userdata.data.data)
+      setPatData(userdata.data.data);
       setLoading(false);
     } catch (error) {
        console.log(error);
@@ -40,9 +52,7 @@ const OpportunityProfile= () => {
   const formattedDate = oppData.performanceDate ? new Date(oppData.performanceDate).toLocaleString() : '';
 
   if(loading){
-    return <div>
-      Loading.......
-    </div>
+    return 
   }
   
   return (
@@ -87,11 +97,9 @@ const OpportunityProfile= () => {
           <div class="paragraph-text">
             {oppData.purpose}
           </div>
-          <div class="section-heading">Languages</div>
-         
-         
+          <div class="section-heading">Languages</div>       
           <ul class="list-items">
-            <li class="list-item">
+            <li class="list-item" style={{fontWeight: "600", color: "black"}} >
               {oppData.languages}
             </li>
           </ul>
@@ -116,7 +124,14 @@ const OpportunityProfile= () => {
           <div class="paragraph-text">
             {oppData.mediaType}
           </div>
+          <div class="section-heading">Application Last Date</div>
+          <div class="paragraph-text">
+            {oppData.applicationPeriod ? new Date(oppData.applicationPeriod.end).toLocaleString() : ""}
+          </div>
           <div class="section-heading">Curated Performance</div>
+          <div class="paragraph-text">
+            {oppData.customization}
+          </div>
         </div>
 
         <div class="right-division">
@@ -137,6 +152,14 @@ const OpportunityProfile= () => {
           <div class="paragraph-text">
             {oppData.audienceSize}
           </div>
+          <div class="section-heading">Profile of Audience</div>
+          <div class="paragraph-text">
+            {oppData.audienceProfile}
+          </div>
+          <div class="section-heading">Performance Facilities</div>
+          <div class="paragraph-text">
+            {oppData.facilities}
+          </div>
           <div class="section-heading">Name of Contact Person</div>
           <div class="paragraph-text">
             {oppData.contactPersonName}
@@ -149,18 +172,24 @@ const OpportunityProfile= () => {
           <div class="paragraph-text">
             {oppData.otherRequirements}
           </div>
-          <div class="section-heading">City & Country</div>
-          <div class="paragraph-text">cochin, Kerala & India</div>
+          <div class="section-heading">Location Of Artist</div>
+          <div class="paragraph-text">
+            {oppData.artistLocation}
+          </div>
+          <div class="section-heading">Artist Level</div>
+          <div class="paragraph-text">
+            {oppData.artistLevel}
+          </div>
         </div>
       </div>
       <div className="profile-footer">
         <div className="socialicon">
           <FaInstagram></FaInstagram>
-          <h3> Instagram ID</h3>
+          <h3> {patData.socialLinks.instagram ? patData.socialLinks.instagram  : "No Instagram Id"}</h3>
         </div>
         <div className="socialicon">
           <FaFacebook></FaFacebook>
-          <h3>Facebook ID</h3>
+          <h3>{patData.socialLinks.facebook ? patData.socialLinks.facebook : "No Facebook Id"}</h3>
         </div>
       </div>
     </div>
