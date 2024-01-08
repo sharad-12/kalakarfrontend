@@ -32,7 +32,7 @@ const ManageOpportunity = () => {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwODJjYzU1NzBkODY1NjA2NGVmNjciLCJpYXQiOjE3MDQzODE3NDMsImV4cCI6MTcwNDQ2ODE0M30.j5PpZQA-m4PC-6JYgYWVOGeVoBImNOOCR1vsrdp44Vw`,
               "Content-Type": "application/json",
             },
           }

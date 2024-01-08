@@ -22,7 +22,6 @@ import DashboardOpportunity from "./components/Dashboard/Dashboardopportunity";
 import Dashboardpartner from "./components/Dashboard/Dashboardpartner";
 import DashboardPerformance from "./components/Dashboard/Dashboardperformance";
 //  import ManageProfile from './components/ManageProfiles/profile'
-//  import Artistprofile from './components/ArtistManagement/artistprofile'
 import ArtsistManagement from "./components/ArtistManagement/artistmanagement";
 function App() {
   return (
